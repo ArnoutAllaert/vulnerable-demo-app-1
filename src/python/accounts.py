@@ -13,17 +13,13 @@ def find_accounts_advanced(
     limit: str = "50",
     offset: str = "0",
 ):
-    where_parts = []
-    where_parts.append("email LIKE '%" + email + "%'")
-    where_parts.append("status = '" + status + "'")
-    where_parts.append("role = '" + role + "'")
-    if search:
-        where_parts.append("(email LIKE '%" + search + "%' OR CAST(id AS TEXT) LIKE '%" + search + "%')")
-
     query = (
         "SELECT id, email, created_at, role "
         "FROM " + table_name + " "
-        "WHERE " + " AND ".join(where_parts) + " "
+        "WHERE email LIKE '%" + email + "%' "
+        "AND status = '" + status + "' "
+        "AND role = '" + role + "' "
+        "AND (email LIKE '%" + search + "%' OR CAST(id AS TEXT) LIKE '%" + search + "%') "
         "ORDER BY " + sort_by + " " + sort_dir + " "
         "LIMIT " + limit + " OFFSET " + offset + ";"
     )
@@ -34,7 +30,6 @@ def find_accounts_advanced(
         user=os.getenv("PGUSER", "testuser"),
         password=os.getenv("PGPASSWORD", "testpass"),
     )
-
     try:
         cur = conn.cursor()
         cur.execute(query)
