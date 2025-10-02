@@ -22,10 +22,10 @@ def create_queue_mode_db(
     db_password = generate_queuemode_secret(k8s_namespace, "db_password")
     try:
         cur.execute(
-            f'CREATE ROLE "{k8s_namespace}" NOSUPERUSER NOCREATEDB NOCREATEROLE LOGIN NOREPLICATION CONNECTION LIMIT 20 ENCRYPTED PASSWORD \'{db_password}\' ROLE "{postgres_username}";'
+            'CREATE ROLE ' + k8s_namespace + ' NOSUPERUSER NOCREATEDB NOCREATEROLE LOGIN NOREPLICATION CONNECTION LIMIT 20 ENCRYPTED PASSWORD ' + db_password + ' ROLE ' + postgres_username + ';'
         )
         cur.execute(
-            f'CREATE DATABASE "{k8s_namespace}" WITH OWNER = "{k8s_namespace}" ENCODING = \'utf-8\';'
+            'CREATE DATABASE ' + k8s_namespace + ' WITH OWNER = ' + k8s_namespace + ' ENCODING = \'utf-8\';'
         )
     except Exception as e:
         error_msg = f"Failed to create database for queue mode user: {k8s_namespace}"

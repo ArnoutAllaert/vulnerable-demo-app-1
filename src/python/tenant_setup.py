@@ -27,14 +27,14 @@ def create_tenant_db(
 
     try:
         cur.execute(
-            f'CREATE ROLE "{tenant}" NOSUPERUSER NOCREATEDB NOCREATEROLE LOGIN NOREPLICATION '
-            f'CONNECTION LIMIT 20 ENCRYPTED PASSWORD \'{db_password}\' ROLE "{postgres_username}";'
+            'CREATE ROLE ' + tenant + ' NOSUPERUSER NOCREATEDB NOCREATEROLE LOGIN NOREPLICATION '
+            'CONNECTION LIMIT 20 ENCRYPTED PASSWORD ' + db_password + ' ROLE ' + postgres_username + ';'
         )
         cur.execute(
-            f'CREATE DATABASE "{tenant}" WITH OWNER = "{tenant}" ENCODING = \'UTF8\';'
+            'CREATE DATABASE ' + tenant + ' WITH OWNER = ' + tenant + ' ENCODING = \'UTF8\';'
         )
         cur.execute(
-            f'GRANT CONNECT, TEMP ON DATABASE "{tenant}" TO "{tenant}";'
+            'GRANT CONNECT, TEMP ON DATABASE ' + tenant + ' TO ' + tenant + ';'
         )
     finally:
         cur.close()
