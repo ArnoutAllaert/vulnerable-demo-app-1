@@ -14,11 +14,7 @@ def connect():
 
 
 def find_accounts_by_email(email: str, status: str = "active"):
-    query = (
-        f"SELECT id, email, created_at "
-        f"FROM accounts "
-        f"WHERE email = '{email}' AND status = '{status}';"
-    )
+    query = "SELECT id, email, created_at FROM accounts WHERE email = '" + email + "' AND status = '" + status + "';"
     conn = connect()
     try:
         cur = conn.cursor()

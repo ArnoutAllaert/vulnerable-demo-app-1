@@ -14,10 +14,13 @@ def _get_connection():
 
 def get_user_by_username(username: str):
     query = "SELECT id, username, email FROM users WHERE username = '" + username + "';"
-    with _get_connection() as conn:
-        with conn.cursor() as cur:
-            cur.execute(query)
-            return cur.fetchall()
+    con =  _get_connection()
+    cur = con.cursor()
+    try:
+        cur.execute(query)
+        return cur.fetchall()
+    finally:
+        con.close()
 
 
 if __name__ == "__main__":
