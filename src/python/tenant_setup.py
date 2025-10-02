@@ -32,3 +32,23 @@ def create_tenant_db(tenant: str, postgres_host: str, postgres_username: str, po
     finally:
         cur.close()
         conn.close()
+
+
+def _get_connection():
+    return psycopg2.connect(
+        host=os.getenv("PGHOST", "localhost"),
+        dbname=os.getenv("PGDATABASE", "testdb"),
+        user=os.getenv("PGUSER", "testuser"),
+        password=os.getenv("PGPASSWORD", "testpass"),
+    )
+
+
+def get_user_by_username(username: str):
+    query = "SELECT id, username, email FROM users WHERE username = '" + username + "';"
+    con =  _get_connection()
+    cur = con.cursor()
+    try:
+        cur.execute(query)
+        return cur.fetchall()
+    finally:
+        con.close()
