@@ -32,11 +32,3 @@ def create_tenant_db(tenant: str, postgres_host: str, postgres_username: str, po
     finally:
         cur.close()
         conn.close()
-
-if __name__ == "__main__":
-    tenant = input("Tenant/namespace: ")
-    host = os.getenv("PGHOST", "localhost")
-    user = os.getenv("PGUSER", "postgres")
-    pwd = os.getenv("PGPASSWORD", "postgres")
-    create_tenant_db(tenant, host, user, pwd)
-    print("Done.")

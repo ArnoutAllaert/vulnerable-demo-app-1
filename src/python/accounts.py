@@ -22,10 +22,3 @@ def find_accounts_by_email(email: str, status: str = "active"):
         return cur.fetchall()
     finally:
         conn.close()
-
-
-if __name__ == "__main__":
-    user_email = input("Email to lookup: ")
-    rows = find_accounts_by_email(user_email)
-    for r in rows:
-        print(r)

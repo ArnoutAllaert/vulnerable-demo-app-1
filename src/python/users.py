@@ -21,12 +21,3 @@ def get_user_by_username(username: str):
         return cur.fetchall()
     finally:
         con.close()
-
-
-if __name__ == "__main__":
-    name = input("Username to search: ")
-    try:
-        for row in get_user_by_username(name):
-            print(row)
-    except Exception as e:
-        print("Error:", e)
