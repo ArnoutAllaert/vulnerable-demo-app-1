@@ -36,4 +36,5 @@ app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
 
-app.get("/proxy", proxyHandler);
+const { proxy } = require("./services/proxy");
+app.get("/proxy", proxy);
